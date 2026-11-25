@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { API_URL } from '../config';
+import { PRODUCTS } from '../data/products';
 import {
   ArrowLeft,
   ArrowRight,
@@ -136,13 +137,27 @@ function ProductDetails() {
 
       try {
         const response = await fetch(`${API_URL}/api/products/${id}`);
-        if (!response.ok) {
+        const contentType = response.headers.get('content-type') || '';
+        if (response.status === 404 && contentType.includes('application/json')) {
           throw new Error('দুঃখিত, পণ্যটি খুঁজে পাওয়া যায়নি।');
+        }
+        if (!response.ok || !contentType.includes('application/json')) {
+          const fallbackProduct = PRODUCTS.find((item) => item.id === id);
+          if (!fallbackProduct) {
+            throw new Error('দুঃখিত, পণ্যটি খুঁজে পাওয়া যায়নি।');
+          }
+          setProduct(fallbackProduct);
+          return;
         }
         const data = await response.json();
         setProduct(data);
       } catch (err) {
-        setError(err.message || 'পণ্য লোড করতে সমস্যা হয়েছে।');
+        const fallbackProduct = PRODUCTS.find((item) => item.id === id);
+        if (fallbackProduct && err.message !== 'দুঃখিত, পণ্যটি খুঁজে পাওয়া যায়নি।') {
+          setProduct(fallbackProduct);
+        } else {
+          setError(err.message || 'পণ্য লোড করতে সমস্যা হয়েছে।');
+        }
       } finally {
         setLoading(false);
       }
@@ -218,9 +233,12 @@ function ProductDetails() {
         }),
       });
 
-      const result = await response.json();
-      if (!response.ok || !result.success) {
-        throw new Error(result.message || 'অর্ডার সম্পন্ন করতে সমস্যা হয়েছে।');
+      const contentType = response.headers.get('content-type') || '';
+      const result = contentType.includes('application/json')
+        ? await response.json()
+        : null;
+      if (!response.ok || !result?.success) {
+        throw new Error(result?.message || 'অর্ডার সম্পন্ন করতে সমস্যা হয়েছে।');
       }
 
       setOrderMessage(result.message || 'অর্ডার সফলভাবে সম্পন্ন হয়েছে!');

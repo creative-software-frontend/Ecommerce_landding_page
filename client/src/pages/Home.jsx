@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URL } from '../config';
+import { PRODUCTS } from '../data/products';
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -11,13 +12,15 @@ function Home() {
     const fetchProducts = async () => {
       try {
         const response = await fetch(`${API_URL}/api/products`);
-        if (!response.ok) {
+        const contentType = response.headers.get('content-type') || '';
+        if (!response.ok || !contentType.includes('application/json')) {
           throw new Error('Failed to fetch products');
         }
         const data = await response.json();
-        setProducts(data);
-      } catch (err) {
-        setError(err.message || 'Could not load products');
+        setProducts(Array.isArray(data) ? data : PRODUCTS);
+      } catch {
+        setProducts(PRODUCTS);
+        setError('');
       } finally {
         setLoading(false);
       }

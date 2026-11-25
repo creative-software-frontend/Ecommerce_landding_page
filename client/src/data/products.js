@@ -1,0 +1,47 @@
+export const PRODUCTS = [
+  {
+    id: 'ultra-hot',
+    name: 'Ultra Hot Capsules',
+    image: '/Ultra_Hot_Capsules.webp',
+    banglaTitle: 'প্রিমিয়াম কোয়ালিটি আল্ট্রা হট ক্যাপসুল',
+    price: 1500,
+    oldPrice: 2950,
+    images: [
+      '/Ultra_Hot_Capsules.webp',
+      '/Ultra_Hot_Capsules.webp',
+      '/Ultra_Hot_Capsules.webp',
+      '/Ultra_Hot_Capsules.webp',
+      '/Ultra_Hot_Capsules.webp',
+    ],
+  },
+  {
+    id: 'jingseng-plus',
+    name: 'JINGSENG PLUS',
+    image: '/jingseng-plus.webp',
+    banglaTitle: 'প্রিমিয়াম কোয়ালিটি জিনসেং প্লাস',
+    price: 1800,
+    oldPrice: 2950,
+    images: [
+      '/jingseng-plus.webp',
+      '/jingseng-plus.webp',
+      '/jingseng-plus.webp',
+      '/jingseng-plus.webp',
+      '/jingseng-plus.webp',
+    ],
+  },
+  {
+    id: 'ling-long',
+    name: 'Ling Long Capsules',
+    image: '/Ling-Long%20Capsules.webp',
+    banglaTitle: 'প্রিমিয়াম কোয়ালিটি লিং লং ক্যাপসুল',
+    price: 1500,
+    oldPrice: 2950,
+    images: [
+      '/Ling-Long Capsules.webp',
+      '/Ling-Long Capsules.webp',
+      '/Ling-Long Capsules.webp',
+      '/Ling-Long Capsules.webp',
+      '/Ling-Long Capsules.webp',
+    ],
+  },
+];
