@@ -4,7 +4,7 @@
   "description": "Backend API for Power Zenox e-commerce landing page",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node init && node index.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
